@@ -1,15 +1,19 @@
 const accessKey = "FRz5xrgnYrzZk4dB6iCqxtA83CUng2z9nlH8OLbc0oo";
-const API = `https://api.unsplash.com/photos/?client_id=${accessKey}`;
-const input = document.querySelector(".input");
+const input = document.getElementById("input");
 const showBtn = document.querySelector(".show-more");
 const searchBtn = document.getElementById("find");
 const imageCard = document.querySelector(".image-cards");
-
+let page = 1;
 function findImages() {
+  if (page === 1) {
+    imageCard.innerHTML = " ";
+  }
+  let searchTerm = input.value;
+  const API = `https://api.unsplash.com/search/photos?page=${page}&query=${searchTerm}&client_id=${accessKey}`;
   fetch(API)
     .then((response) => response.json())
     .then((data) => {
-      data.forEach((images) => {
+      data.results.forEach((images) => {
         const imageWrapper = document.createElement("div");
         imageWrapper.classList.add("card");
         const image = document.createElement("img");
@@ -23,7 +27,22 @@ function findImages() {
         imageWrapper.appendChild(ImageLink);
         imageCard.appendChild(imageWrapper);
       });
+    })
+    .catch((error) => {
+      console.error("Error fetching images:", error);
     });
-}
 
-searchBtn.addEventListener("click", findImages);
+  page++;
+  if (page > 1) {
+    showBtn.style.display = "block";
+  }
+}
+searchBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  page = 1;
+  findImages();
+});
+
+showBtn.addEventListener("click", () => {
+  findImages();
+});
