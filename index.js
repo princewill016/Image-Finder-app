@@ -4,6 +4,7 @@ const showBtn = document.querySelector(".show-more");
 const searchBtn = document.getElementById("find");
 const imageCard = document.querySelector(".image-cards");
 let page = 1;
+
 function findImages() {
   if (page === 1) {
     imageCard.innerHTML = " ";
@@ -19,6 +20,11 @@ function findImages() {
         const image = document.createElement("img");
         image.src = images.urls.small;
         image.alt = images.alt_description;
+        
+        image.addEventListener("click", () => {
+          downloadImage(image.urls.full, image.alt_description);
+        });
+
         const ImageLink = document.createElement("a");
         ImageLink.href = images.links.html;
         ImageLink.target = "_blank";
@@ -37,6 +43,13 @@ function findImages() {
     showBtn.style.display = "block";
   }
 }
+function downloadImage(imageUrl, altText) {
+  const link = document.createElement("a");
+  link.href = imageUrl;
+  link.download = altText || "image";
+  link.click();
+}
+
 searchBtn.addEventListener("click", (event) => {
   event.preventDefault();
   page = 1;

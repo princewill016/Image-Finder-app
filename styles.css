@@ -1,15 +1,11 @@
 * {
-  font-family: "Times New Roman", Times;
+  font-family: "Roboto", sans-serif;
 }
-
-/* body {
-  background-color: black;
-  color: white;
-} */
 
 h1 {
   text-align: center;
   margin-top: 30px;
+  font-weight: 800;
 }
 .search {
   text-align: center;
@@ -37,7 +33,8 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   text-align: center;
-  font-size: x-small;
+  font-size: small;
+  margin: auto;
 }
 .card {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
@@ -46,11 +43,13 @@ h1 {
   margin: 5px;
   max-width: 200px;
   min-width: 200px;
+  justify-content: space-evenly;
 }
 
 .card > img {
   width: 100%;
-  height: 140px;
+  height: 200px;
+  object-fit: cover;
 }
 .card > :hover {
   transition: 0.3s ease-in-out;
@@ -61,26 +60,28 @@ a {
   color: #333;
   text-transform: capitalize;
   display: block;
-  padding: 5px;
+  padding: 10px;
 }
 
 .show-more {
-  background-color: #008cba;
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
   text-align: center;
-  display: block;
   margin: 30px auto;
   border-radius: 5px;
-  cursor: pointer;
   display: none;
+  background-color: #138065;
+  border: 1px solid #138065;
+  border-radius: 3px;
+  padding: 5px 15px;
+  color: white;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 480px) {
   .image-cards {
     display: block;
-    max-width: 90%;
     margin: auto;
+  }
+  .card {
+    min-width: 90%;
   }
 }
