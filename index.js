@@ -4,42 +4,48 @@ const input = document.getElementById("input");
 const searchBtn = document.getElementById("find");
 const showBtn = document.querySelector(".show-more");
 let page = 1;
-window.addEventListener("load", () => {
-  input.value = "";
-});
+
 function findImages() {
   if (page === 1) {
     imageCard.innerHTML = "";
   }
   let searchTerm = input.value;
   const API = `https://api.unsplash.com/search/photos?page=${page}&query=${searchTerm}&client_id=${accessKey}`;
-  fetch(API)
-    .then((response) => response.json())
-    .then((data) => {
-      data.results.forEach((images) => {
-        const imageWrapper = document.createElement("div");
-        imageWrapper.classList.add("card");
-        const image = document.createElement("img");
-        image.src = images.urls.small;
-        image.alt = images.alt_description;
-        const ImageLink = document.createElement("a");
-        ImageLink.href = images.links.html;
-        ImageLink.target = "_blank";
-        ImageLink.textContent = images.description || "Untitled image";
-        imageWrapper.appendChild(image);
-        imageWrapper.appendChild(ImageLink);
-        imageCard.appendChild(imageWrapper);
-      });
-    })
-    .catch((error) => {
-      console.error("Error fetching images:", error);
-    });
+
+  setTimeout(
+    () =>
+      fetch(API)
+        .then((response) => response.json())
+        .then((data) => {
+          data.results.forEach((images) => {
+            const imageWrapper = document.createElement("div");
+            imageWrapper.classList.add("card");
+            const image = document.createElement("img");
+            image.src = images.urls.small;
+            image.alt = images.alt_description;
+            const ImageLink = document.createElement("a");
+            ImageLink.href = images.links.html;
+            ImageLink.target = "_blank";
+            ImageLink.textContent = images.description || "Untitled image";
+            imageWrapper.appendChild(image);
+            imageWrapper.appendChild(ImageLink);
+            imageCard.appendChild(imageWrapper);
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching images:", error);
+        }),
+    500
+  );
   page++;
-  if (input.value == "") {
-    showBtn.style.display;
-  } else if (page > 1) {
-    showBtn.style.display = "block";
-  }
+
+  setTimeout(() => {
+    if (input.value == "") {
+      showBtn.style.display;
+    } else if (page > 1) {
+      showBtn.style.display = "block";
+    }
+  }, 1000);
 }
 searchBtn.addEventListener("click", (event) => {
   event.preventDefault();
