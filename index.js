@@ -1,13 +1,15 @@
 const accessKey = "FRz5xrgnYrzZk4dB6iCqxtA83CUng2z9nlH8OLbc0oo";
-const input = document.getElementById("input");
-const showBtn = document.querySelector(".show-more");
-const searchBtn = document.getElementById("find");
 const imageCard = document.querySelector(".image-cards");
+const input = document.getElementById("input");
+const searchBtn = document.getElementById("find");
+const showBtn = document.querySelector(".show-more");
 let page = 1;
-
+window.addEventListener("load", () => {
+  input.value = "";
+});
 function findImages() {
   if (page === 1) {
-    imageCard.innerHTML = " ";
+    imageCard.innerHTML = "";
   }
   let searchTerm = input.value;
   const API = `https://api.unsplash.com/search/photos?page=${page}&query=${searchTerm}&client_id=${accessKey}`;
@@ -20,15 +22,10 @@ function findImages() {
         const image = document.createElement("img");
         image.src = images.urls.small;
         image.alt = images.alt_description;
-        
-        image.addEventListener("click", () => {
-          downloadImage(image.urls.full, image.alt_description);
-        });
-
         const ImageLink = document.createElement("a");
         ImageLink.href = images.links.html;
         ImageLink.target = "_blank";
-        ImageLink.textContent = images.description;
+        ImageLink.textContent = images.description || "Untitled image";
         imageWrapper.appendChild(image);
         imageWrapper.appendChild(ImageLink);
         imageCard.appendChild(imageWrapper);
@@ -37,25 +34,26 @@ function findImages() {
     .catch((error) => {
       console.error("Error fetching images:", error);
     });
-
   page++;
-  if (page > 1) {
+  if (input.value == "") {
+    showBtn.style.display;
+  } else if (page > 1) {
     showBtn.style.display = "block";
   }
 }
-function downloadImage(imageUrl, altText) {
-  const link = document.createElement("a");
-  link.href = imageUrl;
-  link.download = altText || "image";
-  link.click();
-}
-
 searchBtn.addEventListener("click", (event) => {
   event.preventDefault();
   page = 1;
   findImages();
 });
-
 showBtn.addEventListener("click", () => {
   findImages();
+});
+
+input.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    page = 1;
+    findImages();
+  }
 });

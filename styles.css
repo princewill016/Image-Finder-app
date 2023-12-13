@@ -1,11 +1,18 @@
 * {
   font-family: "Roboto", sans-serif;
+  background-color: #333;
+  color: wheat;
+  /* transition: background-color 0.5s ease; */
 }
 
 h1 {
   text-align: center;
   margin-top: 30px;
   font-weight: 800;
+}
+header > p {
+  text-align: center;
+  font-style: italic;
 }
 .search {
   text-align: center;
@@ -25,7 +32,6 @@ h1 {
   border: 1px solid #138065;
   border-radius: 3px;
   padding: 5px 15px;
-  color: white;
   cursor: pointer;
 }
 
@@ -44,6 +50,7 @@ h1 {
   max-width: 200px;
   min-width: 200px;
   justify-content: space-evenly;
+  flex-direction: column;
 }
 
 .card > img {
@@ -57,10 +64,14 @@ h1 {
 }
 a {
   text-decoration: none;
-  color: #333;
+  color: wheat;
   text-transform: capitalize;
   display: block;
   padding: 10px;
+  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+  white-space: nowrap;
+
+  overflow: hidden;
 }
 
 .show-more {
@@ -72,7 +83,6 @@ a {
   border: 1px solid #138065;
   border-radius: 3px;
   padding: 5px 15px;
-  color: white;
   cursor: pointer;
 }
 
@@ -82,6 +92,23 @@ a {
     margin: auto;
   }
   .card {
-    min-width: 90%;
+    min-width: 95%;
+    margin-top: 20px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .card {
+    margin-top: 20px;
+  }
+  .image-cards {
+    justify-content: space-evenly;
+  }
+}
+@media screen and (max-width: 1500px) {
+  .card {
+    margin-top: 20px;
+  }
+  .image-cards {
+    justify-content: space-evenly;
   }
 }
